@@ -1,0 +1,25 @@
+[project]
+name = "claude-chat-app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "FrostWillmott",email = "i.tkachenko@zohomail.eu"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "flask (>=3.1.1,<4.0.0)",
+    "anthropic (>=0.54.0,<0.55.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "flask-socketio (>=5.5.1,<6.0.0)"
+]
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.13"
+pytest = "^8.4.0"
+pre-commit = "^4.2.0"
+mypy = "^1.16.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
