@@ -1,0 +1,30 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies and poetry
+RUN apt-get update && apt-get install -y \
+    libmagic1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install poetry
+
+# Configure poetry
+RUN poetry config virtualenvs.create false
+
+# Copy dependency files
+COPY pyproject.toml poetry.lock* README.md ./
+
+# Install dependencies
+RUN poetry install --only=main --no-root
+
+# Copy the rest of the application
+COPY . .
+
+# Create uploads directory
+RUN mkdir -p uploads
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Command to run the application with gunicorn
+CMD ["gunicorn", "--worker-class", "eventlet", "-w", "1", "--bind", "0.0.0.0:5050", "app:app"]
